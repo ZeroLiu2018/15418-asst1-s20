@@ -14,7 +14,7 @@
 
 extern Logger CMU418Logger;
 
-template <typename T>
+template<typename T>
 struct __cmu418_vec {
   T value[VECTOR_WIDTH];
 };
@@ -65,41 +65,62 @@ void _cmu418_vmove_int(__cmu418_vec_int &dest, __cmu418_vec_int &src, __cmu418_m
 
 // Load values from array src to vector register dest if vector lane active
 //  otherwise keep the old value
-void _cmu418_vload_float(__cmu418_vec_float &dest, float* src, __cmu418_mask &mask);
-void _cmu418_vload_int(__cmu418_vec_int &dest, int* src, __cmu418_mask &mask);
+void _cmu418_vload_float(__cmu418_vec_float &dest, float *src, __cmu418_mask &mask);
+void _cmu418_vload_int(__cmu418_vec_int &dest, int *src, __cmu418_mask &mask);
 
 // Store values from vector register src to array dest if vector lane active
 //  otherwise keep the old value
-void _cmu418_vstore_float(float* dest, __cmu418_vec_float &src, __cmu418_mask &mask);
-void _cmu418_vstore_int(int* dest, __cmu418_vec_int &src, __cmu418_mask &mask);
+void _cmu418_vstore_float(float *dest, __cmu418_vec_float &src, __cmu418_mask &mask);
+void _cmu418_vstore_int(int *dest, __cmu418_vec_int &src, __cmu418_mask &mask);
 
 // Return calculation of (veca + vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_vadd_float(__cmu418_vec_float &vecResult, __cmu418_vec_float &veca, __cmu418_vec_float &vecb, __cmu418_mask &mask);
+void _cmu418_vadd_float(__cmu418_vec_float &vecResult,
+                        __cmu418_vec_float &veca,
+                        __cmu418_vec_float &vecb,
+                        __cmu418_mask &mask);
 void _cmu418_vadd_int(__cmu418_vec_int &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
 
 // Return calculation of (veca - vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_vsub_float(__cmu418_vec_float &vecResult, __cmu418_vec_float &veca, __cmu418_vec_float &vecb, __cmu418_mask &mask);
+void _cmu418_vsub_float(__cmu418_vec_float &vecResult,
+                        __cmu418_vec_float &veca,
+                        __cmu418_vec_float &vecb,
+                        __cmu418_mask &mask);
 void _cmu418_vsub_int(__cmu418_vec_int &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
 
 // Return calculation of (veca * vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_vmult_float(__cmu418_vec_float &vecResult, __cmu418_vec_float &veca, __cmu418_vec_float &vecb, __cmu418_mask &mask);
-void _cmu418_vmult_int(__cmu418_vec_int &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
+void _cmu418_vmult_float(__cmu418_vec_float &vecResult,
+                         __cmu418_vec_float &veca,
+                         __cmu418_vec_float &vecb,
+                         __cmu418_mask &mask);
+void _cmu418_vmult_int(__cmu418_vec_int &vecResult,
+                       __cmu418_vec_int &veca,
+                       __cmu418_vec_int &vecb,
+                       __cmu418_mask &mask);
 
 // Return calculation of (veca / vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_vdiv_float(__cmu418_vec_float &vecResult, __cmu418_vec_float &veca, __cmu418_vec_float &vecb, __cmu418_mask &mask);
+void _cmu418_vdiv_float(__cmu418_vec_float &vecResult,
+                        __cmu418_vec_float &veca,
+                        __cmu418_vec_float &vecb,
+                        __cmu418_mask &mask);
 void _cmu418_vdiv_int(__cmu418_vec_int &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
 
 // Return calculation of (veca >> vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_vshiftright_int(__cmu418_vec_int &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
+void _cmu418_vshiftright_int(__cmu418_vec_int &vecResult,
+                             __cmu418_vec_int &veca,
+                             __cmu418_vec_int &vecb,
+                             __cmu418_mask &mask);
 
 // Return calculation of (veca & vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_vbitand_int(__cmu418_vec_int &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
+void _cmu418_vbitand_int(__cmu418_vec_int &vecResult,
+                         __cmu418_vec_int &veca,
+                         __cmu418_vec_int &vecb,
+                         __cmu418_mask &mask);
 
 // Return calculation of absolute value abs(veca) if vector lane active
 //  otherwise keep the old value
@@ -108,17 +129,26 @@ void _cmu418_vabs_int(__cmu418_vec_int &vecResult, __cmu418_vec_int &veca, __cmu
 
 // Return a mask of (veca > vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_vgt_float(__cmu418_mask &vecResult, __cmu418_vec_float &veca, __cmu418_vec_float &vecb, __cmu418_mask &mask);
+void _cmu418_vgt_float(__cmu418_mask &vecResult,
+                       __cmu418_vec_float &veca,
+                       __cmu418_vec_float &vecb,
+                       __cmu418_mask &mask);
 void _cmu418_vgt_int(__cmu418_mask &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
 
 // Return a mask of (veca < vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_vlt_float(__cmu418_mask &vecResult, __cmu418_vec_float &veca, __cmu418_vec_float &vecb, __cmu418_mask &mask);
+void _cmu418_vlt_float(__cmu418_mask &vecResult,
+                       __cmu418_vec_float &veca,
+                       __cmu418_vec_float &vecb,
+                       __cmu418_mask &mask);
 void _cmu418_vlt_int(__cmu418_mask &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
 
 // Return a mask of (veca == vecb) if vector lane active
 //  otherwise keep the old value
-void _cmu418_veq_float(__cmu418_mask &vecResult, __cmu418_vec_float &veca, __cmu418_vec_float &vecb, __cmu418_mask &mask);
+void _cmu418_veq_float(__cmu418_mask &vecResult,
+                       __cmu418_vec_float &veca,
+                       __cmu418_vec_float &vecb,
+                       __cmu418_mask &mask);
 void _cmu418_veq_int(__cmu418_mask &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
 
 // Adds up adjacent pairs of elements, so
@@ -131,6 +161,6 @@ void _cmu418_hadd_float(__cmu418_vec_float &vecResult, __cmu418_vec_float &vec);
 void _cmu418_interleave_float(__cmu418_vec_float &vecResult, __cmu418_vec_float &vec);
 
 // Add a customized log to help debugging
-void addUserLog(const char * logStr);
+void addUserLog(const char *logStr);
 
 #endif

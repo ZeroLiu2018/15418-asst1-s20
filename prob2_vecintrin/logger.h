@@ -22,14 +22,14 @@ struct Statistics {
 };
 
 class Logger {
-  private:
-    vector<Log> log;
-    Statistics stats;
+ private:
+  vector<Log> log;
+  Statistics stats;
 
-  public:
-    void addLog(const char * instruction, __cmu418_mask mask, int N = 0);
-    void printStats();
-    void printLog();
+ public:
+  void addLog(const char *instruction, __cmu418_mask mask, int N = 0);
+  void printStats();
+  void printLog();
 };
 
 #endif
