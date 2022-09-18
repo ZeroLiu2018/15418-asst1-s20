@@ -1,5 +1,5 @@
 
-CXX=g++ -m64
+CXX=g++ -m64 -std=c++20
 CXXFLAGS=-I../common -Iobjs/ -O3 -Wall
 
 APP_NAME=mandelbrot
