@@ -1,4 +1,4 @@
-CXX=g++
+CXX=g++ -std=c++17
 CFLAGS = -g -O1
 
 all: vrun

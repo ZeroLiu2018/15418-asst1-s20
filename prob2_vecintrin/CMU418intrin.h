@@ -151,6 +151,12 @@ void _cmu418_veq_float(__cmu418_mask &vecResult,
                        __cmu418_mask &mask);
 void _cmu418_veq_int(__cmu418_mask &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
 
+void _cmu418_vneq_float(__cmu418_mask &vecResult,
+                       __cmu418_vec_float &veca,
+                       __cmu418_vec_float &vecb,
+                       __cmu418_mask &mask);
+void _cmu418_vneq_int(__cmu418_mask &vecResult, __cmu418_vec_int &veca, __cmu418_vec_int &vecb, __cmu418_mask &mask);
+
 // Adds up adjacent pairs of elements, so
 //  [0 1 2 3] -> [0+1 0+1 2+3 2+3]
 void _cmu418_hadd_float(__cmu418_vec_float &vecResult, __cmu418_vec_float &vec);

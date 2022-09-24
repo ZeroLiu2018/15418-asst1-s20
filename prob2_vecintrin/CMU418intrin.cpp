@@ -349,6 +349,14 @@ void _cmu418_veq(__cmu418_mask &maskResult, __cmu418_vec<T> &veca, __cmu418_vec<
   CMU418Logger.addLog("veq", mask, VECTOR_WIDTH);
 }
 
+template<typename T>
+void _cmu418_vneq(__cmu418_mask &maskResult, __cmu418_vec<T> &veca, __cmu418_vec<T> &vecb, __cmu418_mask &mask) {
+  for (int i = 0; i < VECTOR_WIDTH; i++) {
+    maskResult.value[i] = mask.value[i] ? (veca.value[i] != vecb.value[i]) : maskResult.value[i];
+  }
+  CMU418Logger.addLog("vneq", mask, VECTOR_WIDTH);
+}
+
 template void _cmu418_veq<float>(__cmu418_mask &maskResult,
                                  __cmu418_vec_float &veca,
                                  __cmu418_vec_float &vecb,
@@ -366,6 +374,15 @@ void _cmu418_veq_int(__cmu418_mask &maskResult,
                      __cmu418_vec_int &veca,
                      __cmu418_vec_int &vecb,
                      __cmu418_mask &mask) { _cmu418_veq<int>(maskResult, veca, vecb, mask); }
+
+void _cmu418_vneq_float(__cmu418_mask &maskResult,
+                        __cmu418_vec_float &veca,
+                        __cmu418_vec_float &vecb,
+                        __cmu418_mask &mask) { _cmu418_vneq<float>(maskResult, veca, vecb, mask); }
+void _cmu418_vneq_int(__cmu418_mask &maskResult,
+                      __cmu418_vec_int &veca,
+                      __cmu418_vec_int &vecb,
+                      __cmu418_mask &mask) { _cmu418_vneq<int>(maskResult, veca, vecb, mask); }
 
 template<typename T>
 void _cmu418_hadd(__cmu418_vec<T> &vecResult, __cmu418_vec<T> &vec) {
