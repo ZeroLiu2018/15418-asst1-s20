@@ -9,10 +9,10 @@
         #   %xmm3: z_im = c_im
         #   %eax:  i = 0
 .L123:
-        vmulss  %xmm2, %xmm2, %xmm4
-        vmulss  %xmm3, %xmm3, %xmm5
-        vaddss  %xmm5, %xmm4, %xmm6
-        vucomiss        .LC0(%rip), %xmm6
+        vmulss  %xmm2, %xmm2, %xmm4 # z_re * z_re
+        vmulss  %xmm3, %xmm3, %xmm5 # z_im * z_im
+        vaddss  %xmm5, %xmm4, %xmm6  # +
+        vucomiss        .LC0(%rip), %xmm6    # compare
         ja      .L126
         vaddss  %xmm2, %xmm2, %xmm2
         addl    $1, %eax

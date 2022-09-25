@@ -1,5 +1,5 @@
 CXX=g++ -m64
-CXXFLAGS=-I../common -Iobjs/ -O3 -Wall -mavx2
+CXXFLAGS=-I../common -Iobjs/ -O3 -Wall -mavx2 -std=c++17
 
 APP_NAME=mandelbrot
 OBJDIR=objs
@@ -11,8 +11,7 @@ PPM_OBJ=$(addprefix $(OBJDIR)/, $(subst $(COMMONDIR)/,, $(PPM_CXX:.cpp=.o)))
 CALLIBRATE_CXX=$(COMMONDIR)/callibrate.cpp
 CALLIBRATE_OBJ=$(addprefix $(OBJDIR)/, $(subst $(COMMONDIR)/,, $(CALLIBRATE_CXX:.cpp=.o)))
 
-
-default: $(APP_NAME) mandelbrot.s
+all: $(APP_NAME) mandelbrot.s
 
 .PHONY: dirs clean
 

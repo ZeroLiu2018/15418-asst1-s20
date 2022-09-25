@@ -20,9 +20,9 @@ static inline int mandel(float c_re, float c_im, int count) {
 
 // ISPC code to do the Mandelbrot computation across
 // the entire array
-export void mandelbrot_ispc(uniform float x0, uniform float y0, 
+export void mandelbrot_ispc(uniform float x0, uniform float y0,
                             uniform float x1, uniform float y1,
-                            uniform int width, uniform int height, 
+                            uniform int width, uniform int height,
                             uniform int maxIterations,
                             uniform int output[])
 {
@@ -55,7 +55,7 @@ static inline void mandel_par2(float c_re0, float c_im0, float c_re1, float c_im
 
         done0 = done0 | (z_re0*z_re0 + z_im0*z_im0 > 4.f);
         done1 = done1 | (z_re1*z_re1 + z_im1*z_im1 > 4.f);
-	
+
 	if (done0 & done1)
 	    break;
 
@@ -77,21 +77,43 @@ static inline void mandel_par2(float c_re0, float c_im0, float c_re1, float c_im
 
 // ISPC code to do the Mandelbrot computation across
 // an entire array, using two-way parallelism to process two rows at a time
-export void mandelbrot_ispc_par2(uniform float x0, uniform float y0, 
-                            uniform float x1, uniform float y1,
-                            uniform int width, uniform int height, 
+export void mandelbrot_ispc_par2(uniform float x0, uniform float y0,
+                            uniform float xa, uniform float ya,
+                            uniform int width, uniform int height,
                             uniform int maxIterations,
                             uniform int output[])
 {
-    uniform float dx = (x1 - x0) / width;
-    uniform float dy = (y1 - y0) / height;
+    uniform float dx = (xa - x0) / width;
+    uniform float dy = (ya - y0) / height;
 
     // TODO: Write ISPC code that will use function mandel_par2 to process
     // two rows on each pass.
     // You should use the foreach construct.
     // You should handle the case where the height is not a multiple
     // of 2.
+    foreach(j = 0 ... height/2, i = 0 ... width){
+      float j2 = j * 2;
+      float x1 = x0 + i * dx;
+      float y1 = y0 + j2 * dy;
 
+      float x2 = x0 + i * dx;
+      float y2 = y0 + (j2+1) * dy;
+
+      int index1 = j2 * width + i;
+      int index2 = (j2 + 1) * width + i;
+      mandel_par2(x1, y1, x2, y2, maxIterations, output+index1, output + index2);
+    }
+
+    if(height % 2) {
+      int j = height - 1;
+      foreach (i = 0 ... width) {
+        float x = x0 + i * dx;
+        float y = y0 + j * dy;
+
+        int index = j * width + i;
+        output[index] = mandel(x, y, maxIterations);
+      }
+    }
 }
 
 // TODO: Try different block sizes
@@ -99,7 +121,7 @@ export void mandelbrot_ispc_par2(uniform float x0, uniform float y0,
 #define BLOCK_HEIGHT 600
 
 // slightly different kernel to support tasking
-task void mandelbrot_ispc_task(uniform float x0, uniform float y0, 
+task void mandelbrot_ispc_task(uniform float x0, uniform float y0,
                                uniform float x1, uniform float y1,
                                uniform int width, uniform int height,
                                uniform int maxIterations,
@@ -109,7 +131,7 @@ task void mandelbrot_ispc_task(uniform float x0, uniform float y0,
     // taskIndex is an ISPC built-in
 
     uniform int bstride = (width + BLOCK_WIDTH - 1) / BLOCK_WIDTH;
-    
+
     uniform int xstart = (taskIndex % bstride) * BLOCK_WIDTH;
     uniform int xend = min(xstart + BLOCK_WIDTH, width);
     uniform int ystart = (taskIndex / bstride) * BLOCK_HEIGHT;
@@ -117,11 +139,11 @@ task void mandelbrot_ispc_task(uniform float x0, uniform float y0,
 
     uniform float dx = (x1 - x0) / width;
     uniform float dy = (y1 - y0) / height;
-    
+
     foreach (j = ystart ... yend, i = xstart ... xend) {
             float x = x0 + i * dx;
             float y = y0 + j * dy;
-            
+
             int index = j * width + i;
             output[index] = mandel(x, y, maxIterations);
     }
@@ -141,5 +163,5 @@ export void mandelbrot_ispc_withtasks(uniform float x0, uniform float y0,
     launch[taskCount] mandelbrot_ispc_task(x0, y0, x1, y1,
                                          width, height,
                                          maxIterations,
-                                         output); 
+                                         output);
 }

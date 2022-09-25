@@ -15,7 +15,8 @@ TASKSYS_CXX=$(COMMONDIR)/tasksys.cpp
 TASKSYS_LIB=-lpthread
 TASKSYS_OBJ=$(addprefix $(OBJDIR)/, $(subst $(COMMONDIR)/,, $(TASKSYS_CXX:.cpp=.o)))
 
-default: $(APP_NAME)
+#default: $(APP_NAME)
+all: $(APP_NAME)
 
 .PHONY: dirs clean
 
